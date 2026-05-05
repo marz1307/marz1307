@@ -30,7 +30,7 @@ Today I design dimensional models in SQL, transform raw sources with Python and 
 | :--- | :--- |
 | **Analytics Engineering** | Kimball dimensional modelling, dbt, layered warehouses (raw, staging, intermediate, marts), tests and lineage, CI/CD for data |
 | **Data Engineering** | Python and PySpark extractors, Dagster and Airflow orchestration, incremental loads, data quality, Docker |
-| **Data Science** | Feature engineering, predictive modelling, MLflow, BigQuery ML, model administration surfaces |
+| **Data Science** | Feature engineering, predictive modelling, NLP, time series, MLflow, BigQuery ML |
 | **Backend & API** | FastAPI service layers, SQLAlchemy, Alembic, Redis, authentication |
 | **Visualisation** | Power BI, Tableau, exec-ready dashboards, real-time KPI surfaces |
 
@@ -39,6 +39,7 @@ Today I design dimensional models in SQL, transform raw sources with Python and 
 **Languages**
 
 ![Python](https://img.shields.io/badge/Python-FFFFFF?style=for-the-badge&logo=python&logoColor=3776AB)
+![R](https://img.shields.io/badge/R-FFFFFF?style=for-the-badge&logo=r&logoColor=276DC3)
 ![SQL](https://img.shields.io/badge/SQL-FFFFFF?style=for-the-badge&logo=postgresql&logoColor=4169E1)
 ![PySpark](https://img.shields.io/badge/PySpark-FFFFFF?style=for-the-badge&logo=apachespark&logoColor=E25A1C)
 ![TypeScript](https://img.shields.io/badge/TypeScript-FFFFFF?style=for-the-badge&logo=typescript&logoColor=3178C6)
@@ -51,6 +52,14 @@ Today I design dimensional models in SQL, transform raw sources with Python and 
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-FFFFFF?style=for-the-badge&logo=postgresql&logoColor=4169E1)
 ![Databricks](https://img.shields.io/badge/Databricks-FFFFFF?style=for-the-badge&logo=databricks&logoColor=FF3621)
 ![MLflow](https://img.shields.io/badge/MLflow-FFFFFF?style=for-the-badge&logo=mlflow&logoColor=0194E2)
+
+**ML / NLP**
+
+![scikit-learn](https://img.shields.io/badge/scikit--learn-FFFFFF?style=for-the-badge&logo=scikitlearn&logoColor=F7931E)
+![HuggingFace](https://img.shields.io/badge/HuggingFace-FFFFFF?style=for-the-badge&logo=huggingface&logoColor=FFD21E)
+![PyTorch](https://img.shields.io/badge/PyTorch-FFFFFF?style=for-the-badge&logo=pytorch&logoColor=EE4C2C)
+![pandas](https://img.shields.io/badge/pandas-FFFFFF?style=for-the-badge&logo=pandas&logoColor=150458)
+![NumPy](https://img.shields.io/badge/NumPy-FFFFFF?style=for-the-badge&logo=numpy&logoColor=013243)
 
 **Orchestration**
 
@@ -83,22 +92,73 @@ Today I design dimensional models in SQL, transform raw sources with Python and 
 
 ![Docker](https://img.shields.io/badge/Docker-FFFFFF?style=for-the-badge&logo=docker&logoColor=2496ED)
 ![Git](https://img.shields.io/badge/Git-FFFFFF?style=for-the-badge&logo=git&logoColor=F05032)
-![GitHub](https://img.shields.io/badge/GitHub-FFFFFF?style=for-the-badge&logo=github&logoColor=181717)
+![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-FFFFFF?style=for-the-badge&logo=githubactions&logoColor=2088FF)
 ![pytest](https://img.shields.io/badge/pytest-FFFFFF?style=for-the-badge&logo=pytest&logoColor=0A9EDC)
 
-## Featured project
+## Featured projects
 
-### Account Intelligence Platform · Force24
+### 1. Account Intelligence Platform · Force24
 
-Industry-partnered MSc dissertation with Force24, a marketing automation SaaS. Delivered a production-ready Account Intelligence platform end to end across three layers.
+Industry-partnered end-to-end customer intelligence platform delivered for Force24, a marketing automation SaaS. Three layers integrated into one working system: Dagster orchestrating ingestion, dbt landing into a layered PostgreSQL warehouse (raw, staging, intermediate, marts), a FastAPI service layer with auth and Redis caching, and an Angular dashboard surfacing customer detail views, KPI reporting, and model administration.
 
-- **Data layer.** Dagster orchestrating ingestion from multiple source systems, dbt landing into a layered PostgreSQL warehouse (raw, staging, intermediate, marts), output marts for accounts, revenue, support, CSM metrics, and ML features
-- **Service layer.** FastAPI with authentication, SQLAlchemy, Alembic migrations, Redis caching
-- **Frontend.** Angular dashboard surfacing customer detail views, KPI reporting, and model administration
-
-Stack: Python, SQL, dbt, Dagster, FastAPI, PostgreSQL, SQLAlchemy, Alembic, Redis, Docker, Angular, Tailwind, pytest.
+`Python` · `SQL` · `dbt` · `Dagster` · `FastAPI` · `PostgreSQL` · `Angular` · `Docker` · `pytest`
 
 [![Case study](https://img.shields.io/badge/Read%20case%20study-D4471F?style=for-the-badge&logo=readthedocs&logoColor=white)](https://marz1307.github.io/projects/force24.html)
+
+---
+
+### 2. Pharmaceutical Side-Effect Classification
+
+Production-grade Python package that classifies medicine adverse events into ten clinical categories. sklearn `Pipeline` with `ColumnTransformer` for TF-IDF text features and ordinal manufacturer encoding, joblib-serialized end-to-end. Pydantic config, CLI entrypoints (`train`, `predict`), pytest suite on synthetic fixtures, GitHub Actions CI matrix on Python 3.10/3.11/3.12.
+
+`Python` · `scikit-learn` · `pandas` · `pyproject.toml` · `pytest` · `ruff` · `GitHub Actions`
+
+[![Repo](https://img.shields.io/badge/Repo-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/marz1307/Pharma-side-effects)
+
+---
+
+### 3. Conflict Sentiment Analysis
+
+NLP package quantifying how 8,158 English-language news articles framed the Russia and Ukraine conflict across 68 publishers. Three sentiment engines (TextBlob lexicon, VADER social-tuned, CardiffNLP RoBERTa transformer) plus a five-topic LDA model, all behind an abstract `SentimentEngine` base class with a registry pattern. Transformer mocked in CI so tests don't download GB of weights.
+
+`Python` · `HuggingFace Transformers` · `PyTorch` · `NLTK` · `gensim` · `pytest` · `GitHub Actions`
+
+[![Repo](https://img.shields.io/badge/Repo-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/marz1307/Conflict-sentiment-analysis)
+
+---
+
+### 4. Equity Forecasting
+
+Reproducible R analysis package for daily equity closing-price forecasting. ARIMA, ETS, and naive baseline behind a model registry with stationarity testing (ADF, KPSS), residual diagnostics (Ljung-Box, Shapiro), and forecast-accuracy evaluation. testthat suite, lintr config, R-CMD-check matrix on R 4.3 and 4.4.
+
+`R` · `forecast` · `tseries` · `ggplot2` · `testthat` · `lintr` · `GitHub Actions`
+
+[![Repo](https://img.shields.io/badge/Repo-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/marz1307/Equity-forecasting)
+
+---
+
+### 5. Economic Resilience Dashboard
+
+Interactive Power BI dashboard exploring 20 years of macroeconomic resilience across 26 high-income economies (2001 to 2020). Companion Python validator (pandas + openpyxl) with CI ensures every dataset descriptor in the README matches the actual xlsx contents. Documentation covers data model, DAX measures, methodology, and key findings.
+
+`Power BI` · `DAX` · `Python` · `pandas` · `openpyxl` · `pytest` · `GitHub Actions`
+
+[![Repo](https://img.shields.io/badge/Repo-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/marz1307/Economic-Resilience-Dashboard)
+
+---
+
+### 6. Big Data Player Scouting
+
+PySpark pipeline that ranks footballers across five European leagues using UEFA event data. Distributed feature engineering, percentile-based composite scoring, and reproducible notebooks for scout-facing reports.
+
+`PySpark` · `Python` · `Jupyter` · `pandas`
+
+[![Case study](https://img.shields.io/badge/Case%20study-D4471F?style=for-the-badge&logo=readthedocs&logoColor=white)](https://marz1307.github.io/projects/football-scouting.html)
+[![Repo](https://img.shields.io/badge/Repo-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/marz1307/Monitoring-Player-Performance-and-Scouting-in-Football)
+
+---
+
+More work, including case studies and additional repos, lives on the [portfolio site](https://marz1307.github.io).
 
 ## Selected impact
 
@@ -112,76 +172,6 @@ Stack: Python, SQL, dbt, Dagster, FastAPI, PostgreSQL, SQLAlchemy, Alembic, Redi
 | Federal Mortgage Bank of Nigeria | IT governance workflows | Approval turnaround **down 30%** |
 | Federal Mortgage Bank of Nigeria | Repayment analytics | Manual entry time **down 25%** |
 
-## Projects
-
-### Account Intelligence Platform · Force24
-End-to-end customer intelligence system built in 16 weeks as MSc Data Science dissertation with Force24. Three layers: Dagster + dbt data layer, FastAPI service, Angular dashboard.
-
-[![Case study](https://img.shields.io/badge/Case%20study-D4471F?style=for-the-badge&logo=readthedocs&logoColor=white)](https://marz1307.github.io/projects/force24.html)
-
----
-
-### Big Data Player Scouting
-PySpark pipeline that ranks footballers across five European leagues using UEFA event data. Published and open sourced.
-
-[![Case study](https://img.shields.io/badge/Case%20study-D4471F?style=for-the-badge&logo=readthedocs&logoColor=white)](https://marz1307.github.io/projects/football-scouting.html)
-[![Repo](https://img.shields.io/badge/Repo-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/marz1307/Monitoring-Player-Performance-and-Scouting-in-Football)
-
----
-
-### Steam Games Recommender
-Collaborative-filtering recommender built on PySpark with MLflow tracking, shipped on Databricks.
-
-[![Case study](https://img.shields.io/badge/Case%20study-D4471F?style=for-the-badge&logo=readthedocs&logoColor=white)](https://marz1307.github.io/projects/steam-recommender.html)
-[![Repo](https://img.shields.io/badge/Repo-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/marz1307/Recommender-System-for-Steam-Games)
-
----
-
-### Clinical Trial Data Analysis
-Statistical analysis and visualisation of clinical trial outcomes in Python, with reproducible notebooks and clear methodology.
-
-[![Case study](https://img.shields.io/badge/Case%20study-D4471F?style=for-the-badge&logo=readthedocs&logoColor=white)](https://marz1307.github.io/projects/clinical-trial-analysis.html)
-[![Repo](https://img.shields.io/badge/Repo-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/marz1307/Clinical-Trial-Data-Analysis)
-
----
-
-### AirWave Express Ticketing System
-SQL Server schema for an airport ticketing platform: passenger, flight, reservation, ticketing, baggage, ancillary services. Sequences, triggers, and integrity constraints.
-
-[![Case study](https://img.shields.io/badge/Case%20study-D4471F?style=for-the-badge&logo=readthedocs&logoColor=white)](https://marz1307.github.io/projects/airwave-express.html)
-[![Repo](https://img.shields.io/badge/Repo-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/marz1307/AirWaveExpressTicketingSystem)
-
----
-
-### E-commerce Analytics Schema
-Relational database for an e-commerce platform with analytical queries built on top. Schema designed with the analytical questions in mind from the start.
-
-[![Case study](https://img.shields.io/badge/Case%20study-D4471F?style=for-the-badge&logo=readthedocs&logoColor=white)](https://marz1307.github.io/projects/online-shopping-db.html)
-[![Repo](https://img.shields.io/badge/Repo-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/marz1307/OnlineShoppingDB)
-
----
-
-### Coursera Data Science Portfolio
-Collection of self-contained data science notebooks covering machine learning, EDA, feature engineering, and visualisation across many real-world datasets.
-
-[![Case study](https://img.shields.io/badge/Case%20study-D4471F?style=for-the-badge&logo=readthedocs&logoColor=white)](https://marz1307.github.io/projects/coursera-data-science.html)
-[![Repo](https://img.shields.io/badge/Repo-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/marz1307/Coursera-Projects)
-
----
-
-### Portfolio Website
-Personal portfolio site. Static HTML, vanilla JS, no build step. Warm-paper light mode, deep-warm-black dark mode, vermilion accent.
-
-[![Live](https://img.shields.io/badge/Live%20site-D4471F?style=for-the-badge&logo=githubpages&logoColor=white)](https://marz1307.github.io)
-[![Repo](https://img.shields.io/badge/Repo-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/marz1307/marz1307.github.io)
-
----
-
-### PyData Analysis Workshop
-Step-by-step workshop materials for the "Simplifying Data Analysis" talk. Hands-on Jupyter notebooks for newcomers to Python data work.
-
-[![Repo](https://img.shields.io/badge/Repo-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/marz1307/pydata-analysis-workshop)
-
 ## Education
 
 - **MSc Data Science**, The University of Salford
@@ -190,7 +180,7 @@ Step-by-step workshop materials for the "Simplifying Data Analysis" talk. Hands-
 
 ## Currently
 
-Wrapping the MSc dissertation with Force24. Open to Analytics Engineer and Data Scientist roles on engineering-first teams that ship to production and take data quality seriously.
+Recently delivered the Account Intelligence platform with Force24. Open to Analytics Engineer and Data Scientist roles on engineering-first teams that ship to production and take data quality seriously.
 
 ## Connect
 
